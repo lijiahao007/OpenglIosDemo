@@ -16,7 +16,7 @@ GLBatch triangleBatch;
 GLShaderManager shaderManager;
 
 GLfloat blockSize = 0.1f;
-GLfloat stepSize = 0.01f;
+GLfloat stepSize = 0.05f;
 
 GLfloat vVerts[] = {
     -blockSize, -blockSize, 0.0f, // 左下
@@ -27,6 +27,11 @@ GLfloat vVerts[] = {
     
     -blockSize, blockSize, 0.0f, // 左上
 };
+
+GLfloat xOriginPos = 0; // 原点x坐标
+GLfloat yOriginPos = 0; // 原点y坐标
+GLfloat rotateDegreeStep = 1.0f; // 旋转的度。
+GLfloat curRotateDegree= 0;
 
 
 //窗口大小改变时接受新的宽度和高度，其中0,0代表窗口中视口的左下角坐标，w，h代表像素
@@ -90,10 +95,33 @@ void RenderScene(void)
     
     GLfloat vRed[] = {1.0f,0.0f,0.0f,1.0f};
     
-    //传递到存储着色器，即GLT_SHADER_IDENTITY着色器，这个着色器只是使用指定颜色以默认笛卡尔坐标第在屏幕上渲染几何图形
-    // UseStockShader 使用固定着色器
-    // GLT_SHADER_IDENTITY 单元着色器
-    shaderManager.UseStockShader(GLT_SHADER_IDENTITY,vRed);
+    // 使用平面着色器
+    M3DMatrix44f mTranslateMatrix, mRotateMatrix, mFinalMatrix;
+    // 使用矩阵平移画面，x参数对应横向平移，y参数对应垂直平移。
+    // 平移矩阵
+    m3dTranslationMatrix44(mTranslateMatrix, xOriginPos, yOriginPos, 0.0f);
+    // 旋转矩阵
+    m3dRotationMatrix44(mRotateMatrix, curRotateDegree, 0.0f, 0.0f, 1.0f);
+
+    /**
+     矩阵相乘 （矩阵点乘）
+     /注意：矩阵点乘不具备交换律，即相乘矩阵交换位置，得出来的结果会不一样
+     总体的规律是，在前面的矩阵先应用，在后面的矩阵后应用。
+     
+     平移矩阵在前：
+     如果你首先应用平移矩阵，那么物体将会先被平移到新的位置。
+     接着，当你应用旋转矩阵时，旋转将会围绕平移后的新位置进行。
+     这种顺序通常用于先移动物体到一个特定的位置，然后再围绕该位置进行旋转。
+
+     平移矩阵在后：
+     如果你首先应用旋转矩阵，那么物体将会先围绕其原始位置进行旋转。
+     接着，当你应用平移矩阵时，平移将会基于旋转后的物体进行。
+     这种顺序通常用于先围绕物体的原始位置进行旋转，然后再将旋转后的物体移动到新的位置。
+     */
+   
+    m3dMatrixMultiply44(mFinalMatrix, mTranslateMatrix, mRotateMatrix);
+    
+    shaderManager.UseStockShader(GLT_SHADER_FLAT, mFinalMatrix, vRed);
     
     //提交着色器
     triangleBatch.Draw();
@@ -107,56 +135,34 @@ void SpecialKeys(int key, int x, int y) {
     printf("SpecialKeys key[%d]  x[%d]  y[%d]\n", key, x, y);
     
     // 修改顶点数据
-    
-    // 先修改左下角
-    GLfloat leftBottomX = vVerts[0];
-    GLfloat leftBottomY = vVerts[1];
-    
     if (key == GLUT_KEY_UP) {
-        if (leftBottomY + 2*blockSize + stepSize <= 1) {
-            leftBottomY += stepSize;
+        if (yOriginPos + blockSize + stepSize <= 1) {
+            yOriginPos += stepSize;
         } else {
-            leftBottomY = 1 - 2 * blockSize;
+            yOriginPos = 1 - blockSize;
         }
         
     } else if (key == GLUT_KEY_LEFT) {
-        if (leftBottomX - stepSize >= -1) {
-            leftBottomX -= stepSize;
+        if (xOriginPos - blockSize - stepSize >= -1) {
+            xOriginPos -= stepSize;
         } else {
-            leftBottomX = -1;
+            xOriginPos = -1 + blockSize;
         }
     } else if (key == GLUT_KEY_RIGHT) {
-        if (leftBottomX + 2*blockSize + stepSize <= 1) {
-            leftBottomX += stepSize;
+        if (xOriginPos + blockSize + stepSize <= 1) {
+            xOriginPos += stepSize;
         } else {
-            leftBottomX = 1 - 2 * blockSize;
+            xOriginPos = 1 - blockSize;
         }
     } else if (key == GLUT_KEY_DOWN) {
-        if (leftBottomY - stepSize >= -1) {
-            leftBottomY -= stepSize;
+        if (yOriginPos - blockSize - stepSize >= -1) {
+            yOriginPos -= stepSize;
         } else {
-            leftBottomY = -1;
+            yOriginPos = -1 + blockSize;
         }
+    } else if (key == 'r' || key == 'R') {
+        curRotateDegree += rotateDegreeStep;
     }
-    
-    // 根据左下角的顶点，修改其他顶点。
-    vVerts[0] = leftBottomX;
-    vVerts[1] = leftBottomY;
-    
-    // 右下
-    vVerts[3] = leftBottomX + 2*blockSize;
-    vVerts[4] = leftBottomY;
-    
-    // 右上
-    vVerts[6] = leftBottomX + 2*blockSize;
-    vVerts[7] = leftBottomY + 2*blockSize;
-    
-    // 左上
-    vVerts[9] = leftBottomX;
-    vVerts[10] = leftBottomY + 2*blockSize;
-    
-    // 将顶点数据重新引用到OpenGL中
-    triangleBatch.CopyVertexData3f(vVerts);
     
     // 重新渲染。（重新调用RenderScnene 注册的渲染函数）
     glutPostRedisplay();
