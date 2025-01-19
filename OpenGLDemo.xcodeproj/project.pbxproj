@@ -19,9 +19,9 @@
 		546265C72B98E5BD004D3A73 /* libgltools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 546265C62B98E5BD004D3A73 /* libgltools.a */; };
 		546265D62B98EEB0004D3A73 /* libglfw.3.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 546265D52B98EEB0004D3A73 /* libglfw.3.4.dylib */; };
 		546265D82B98EEC3004D3A73 /* libGLEW.2.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 546265D72B98EEC3004D3A73 /* libGLEW.2.2.0.dylib */; };
-		546265D92B98F24B004D3A73 /* libGLEW.2.2.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 546265D72B98EEC3004D3A73 /* libGLEW.2.2.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		546265DA2B98F24B004D3A73 /* libglfw.3.4.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 546265D52B98EEB0004D3A73 /* libglfw.3.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		546265DB2B98F25A004D3A73 /* libgltools.a in CopyFiles */ = {isa = PBXBuildFile; fileRef = 546265C62B98E5BD004D3A73 /* libgltools.a */; };
+		54A1A7AC2D3D1BFD003E2809 /* libGLEW.2.2.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 54A1A7AB2D3D1BFD003E2809 /* libGLEW.2.2.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		54A1A7AE2D3D1C2D003E2809 /* libglfw.3.4.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 54A1A7AD2D3D1C2D003E2809 /* libglfw.3.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C2FA13935D1F50836343227C /* Pods_OpenGLDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB21F1FB62AF24882698056F /* Pods_OpenGLDemoTests.framework */; };
 		C3A86FA70463F38EB77F027D /* Pods_OpenGLDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E463A291CF121D51AB7C8751 /* Pods_OpenGLDemo.framework */; };
 /* End PBXBuildFile section */
@@ -46,13 +46,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		546265CC2B98EB6D004D3A73 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				54A1A7AE2D3D1C2D003E2809 /* libglfw.3.4.dylib in CopyFiles */,
+				54A1A7AC2D3D1BFD003E2809 /* libGLEW.2.2.0.dylib in CopyFiles */,
 				546265DB2B98F25A004D3A73 /* libgltools.a in CopyFiles */,
-				546265D92B98F24B004D3A73 /* libGLEW.2.2.0.dylib in CopyFiles */,
-				546265DA2B98F24B004D3A73 /* libglfw.3.4.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +90,8 @@
 		546265C62B98E5BD004D3A73 /* libgltools.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgltools.a; path = lib/libgltools.a; sourceTree = "<group>"; };
 		546265D52B98EEB0004D3A73 /* libglfw.3.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.4.dylib; path = ../../../../opt/homebrew/Cellar/glfw/3.4/lib/libglfw.3.4.dylib; sourceTree = "<group>"; };
 		546265D72B98EEC3004D3A73 /* libGLEW.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.2.0.dylib; path = ../../../../opt/homebrew/Cellar/glew/2.2.0_1/lib/libGLEW.2.2.0.dylib; sourceTree = "<group>"; };
+		54A1A7AB2D3D1BFD003E2809 /* libGLEW.2.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libGLEW.2.2.0.dylib; sourceTree = "<group>"; };
+		54A1A7AD2D3D1C2D003E2809 /* libglfw.3.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libglfw.3.4.dylib; sourceTree = "<group>"; };
 		B50885323CDBD4CFD0690C8C /* Pods-OpenGLDemo-OpenGLDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenGLDemo-OpenGLDemoUITests.debug.xcconfig"; path = "Target Support Files/Pods-OpenGLDemo-OpenGLDemoUITests/Pods-OpenGLDemo-OpenGLDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C89118E860EFA05D9D85D0BF /* Pods-OpenGLDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenGLDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-OpenGLDemoTests/Pods-OpenGLDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D2AFC73BF15AD6D8BBE16F63 /* Pods-OpenGLDemo-OpenGLDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenGLDemo-OpenGLDemoUITests.release.xcconfig"; path = "Target Support Files/Pods-OpenGLDemo-OpenGLDemoUITests/Pods-OpenGLDemo-OpenGLDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +137,8 @@
 		5462656F2B98E0C0004D3A73 = {
 			isa = PBXGroup;
 			children = (
+				54A1A7AD2D3D1C2D003E2809 /* libglfw.3.4.dylib */,
+				54A1A7AB2D3D1BFD003E2809 /* libGLEW.2.2.0.dylib */,
 				5462657A2B98E0C0004D3A73 /* OpenGLDemo */,
 				546265902B98E0C1004D3A73 /* OpenGLDemoTests */,
 				5462659A2B98E0C1004D3A73 /* OpenGLDemoUITests */,
